@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        *{ margin: 0; padding: 0; box-sizing: border-box; }
+        html{ scroll-behavior: smooth; scroll-padding-top: 20px; }
+        body{
+            background-color: rgb(0, 0, 32);
+            font-family: "Poppins", sans-serif;
+            color: white;
+        }
+
+        /*  Header */
+        nav{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: rgb(15, 15, 47);
+            height: 80px;
+            border-bottom: 1px solid transparent;
+            transition: box-shadow .4s ease, border-color .4s ease;
+        }
+        nav:hover{
+            border-color: #17116c;
+            box-shadow: 0 6px 24px rgba(169, 90, 243, .18);
+        }
+        .left{
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color .3s ease, text-shadow .3s ease, transform .3s ease;
+        }
+        .left:hover{
+            color: rgb(200, 150, 250);
+            text-shadow: 0 0 14px rgba(169, 90, 243, .6);
+            transform: scale(1.04);
+        }
+        nav ul{ display: flex; justify-content: center; }
+        nav ul li{ list-style-type: none; margin: 0 23px; }
+        nav ul li a{
+            position: relative;
+            display: inline-block;
+            padding: 6px 2px;
+            text-decoration: none;
+            color: white;
+            transition: color .3s ease, transform .3s ease, text-shadow .3s ease;
+        }
+        nav ul li a::after{
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, rgb(169, 90, 243), #5b8cff);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform .35s ease;
+        }
+        nav ul li a:hover{
+            color: lavender;
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px rgba(169, 90, 243, .5);
+        }
+        nav ul li a:hover::after{
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        main hr{
+            border: 0;
+            background: #17116c;
+            height: 1.2px;
+            margin: 40px 84px;
+        }
+
+        /*  Home section */
+        .firstSection{
+            display: flex;
+            min-height: 66vh;
+            justify-content: space-around;
+            align-items: center;
+            margin: 78px 0px;
+        }
+        .leftSection{
+            width: 52%;
+            font-size: clamp(2rem, 3.4vw, 3rem);
+        }
+
+        /*  Profile photo */
+        .rightSection{
+            width: 36%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .profile-frame{
+            position: relative;
+            width: clamp(220px, 26vw, 380px);
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            padding: 6px;
+            background: linear-gradient(135deg, rgb(169, 90, 243), #5b8cff);
+            box-shadow: 0 0 40px rgba(169, 90, 243, .35),
+                        0 0 90px rgba(91, 140, 255, .15);
+            animation: float 5s ease-in-out infinite;
+            transition: box-shadow .4s ease;
+        }
+        .profile-frame:hover{
+            box-shadow: 0 0 55px rgba(169, 90, 243, .6),
+                        0 0 110px rgba(91, 140, 255, .3);
+        }
+        .profile-frame img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top; /* keeps the face in frame; try "center center" or "center 20%" */
+            border-radius: 50%;
+            border: 6px solid rgb(0, 0, 32);
+            display: block;
+        }
+        @keyframes float{
+            0%, 100%{ transform: translateY(0); }
+            50%{ transform: translateY(-12px); }
+        }
+
+        /* name always stays on ONE line */
+        .name{
+            display: block;
+            white-space: nowrap;
+        }
+
+        .leftSection .btn{
+            padding: 12px;
+            background: #070821;
+            color: white;
+            border: 2px solid white;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+        }
+        .leftSection .btn:hover{
+            transform: translateY(-3px);
+            border-color: rgb(169, 90, 243);
+            box-shadow: 0 8px 20px rgba(169, 90, 243, .35);
+        }
+        .purple, #element{ color: rgb(169, 90, 243); }
+        .text-gray{ color: grey; }
+
+        /* Shared section layout */
+        .section{
+            max-width: 80vw;
+            margin: auto;
+            padding: 20px 0 30px;
+        }
+        .section h1{ font-size: 1.9rem; margin-bottom: 28px; }
+
+        /* About */
+        .about-content{
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+        .about-text p{
+            color: #b5b5c8;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        .about-cards{ display: flex; flex-direction: column; gap: 16px; }
+        .about-card{
+            background: rgb(15, 15, 47);
+            border: 1px solid #17116c;
+            border-radius: 12px;
+            padding: 18px 22px;
+        }
+        .about-card h4{
+            color: rgb(169, 90, 243);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .about-card p{ font-size: 0.95rem; line-height: 1.5; }
+
+        /* Education timeline */
+        .timeline{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding-left: 32px;
+        }
+        .timeline::before{
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #17116c;
+        }
+        .edu-item{
+            position: relative;
+            background: rgb(15, 15, 47);
+            border: 1px solid #17116c;
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+        .edu-item::before{
+            content: "";
+            position: absolute;
+            left: -32px;
+            top: 26px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgb(169, 90, 243);
+            border: 3px solid rgb(0, 0, 32);
+        }
+        .edu-head{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .edu-head h3{ font-size: 1.2rem; font-weight: 600; }
+        .edu-year{
+            font-size: 12px;
+            padding: 3px 12px;
+            border-radius: 50px;
+            border: 1px solid rgb(169, 90, 243);
+            color: rgb(200, 150, 250);
+            align-self: center;
+        }
+        .edu-school{ color: rgb(169, 90, 243); font-weight: 500; margin-bottom: 4px; }
+        .edu-meta{ color: #b5b5c8; font-size: 0.9rem; line-height: 1.6; }
+
+        /* Projects */
+        .projects{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .project{
+            position: relative;
+            overflow: hidden;
+            background: rgb(15, 15, 47);
+            border: 1px solid #17116c;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .project h3{ font-size: 1.2rem; font-weight: 600; transition: color .3s ease; }
+        .project p{ color: #b5b5c8; font-size: 0.9rem; line-height: 1.6; flex: 1; }
+        .tags{ display: flex; flex-wrap: wrap; gap: 8px; }
+        .tags span{
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 50px;
+            border: 1px solid rgb(169, 90, 243);
+            color: rgb(200, 150, 250);
+            transition: background .3s ease, color .3s ease, transform .3s ease;
+        }
+        .project a{ color: rgb(169, 90, 243); text-decoration: none; font-size: 0.9rem; }
+        .project a:hover{ color: lavender; }
+        .project::before{
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, rgb(169, 90, 243), #5b8cff);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .4s ease;
+        }
+        .project:hover{
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgb(169, 90, 243);
+            background: linear-gradient(160deg, rgb(25, 22, 70), rgb(15, 15, 47));
+            box-shadow: 0 14px 35px rgba(169, 90, 243, .28);
+        }
+        .project:hover::before{ transform: scaleX(1); }
+        .project:hover h3{ color: rgb(200, 150, 250); }
+        .project:hover .tags span{ background: rgba(169, 90, 243, .18); }
+        .tags span:hover{ background: rgb(169, 90, 243); color: white; transform: translateY(-2px); }
+
+        /* Skills */
+        .skills{ display: flex; flex-wrap: wrap; gap: 12px; }
+        .skills span{
+            padding: 8px 18px;
+            background: #070821;
+            border: 1px solid #17116c;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            cursor: default;
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1),
+                        background .3s ease, border-color .3s ease,
+                        box-shadow .3s ease, color .3s ease,
+                        opacity .7s ease, translate .7s ease;
+        }
+        .skills span:hover{
+            transform: translateY(-6px) scale(1.12);
+            background: linear-gradient(135deg, rgb(169, 90, 243), #5b8cff);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 8px 22px rgba(169, 90, 243, .45);
+        }
+
+        /* Contact */
+        .contact-links{ display: flex; flex-wrap: wrap; gap: 16px; }
+        .contact-links a{
+            padding: 12px 24px;
+            background: #070821;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease;
+        }
+        .contact-links a:hover{
+            border-color: rgb(169, 90, 243);
+            color: lavender;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(169, 90, 243, .35);
+        }
+
+        /* Footer */
+        footer{
+            background-color: #07041c;
+            margin-top: 60px;
+            border-top: 1px solid #17116c;
+        }
+        .footer{
+            max-width: 80vw;
+            margin: auto;
+            padding: 48px 0 32px;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer h3{ font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; }
+        .footer h4{
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgb(169, 90, 243);
+            margin-bottom: 14px;
+        }
+        .footer p{ color: #b5b5c8; font-size: 0.9rem; line-height: 1.7; max-width: 320px; }
+        .footer ul{ list-style-type: none; display: flex; flex-direction: column; gap: 10px; }
+        footer a{
+            color: #b5b5c8;
+            text-decoration: none;
+            font-size: 0.92rem;
+            transition: color 0.2s, padding-left 0.2s;
+        }
+        footer a:hover{ color: lavender; padding-left: 4px; }
+        .footer-bottom{
+            max-width: 80vw;
+            margin: auto;
+            padding: 18px 0 22px;
+            border-top: 1px solid #17116c;
+            display: flex;
+            /* justify-content: space-between; */
+            flex-wrap: wrap;
+            gap: 8px;
+            color: grey;
+            font-size: 0.85rem;
+
+            /* align-items: center; */
+            justify-content: center;
+        }
+
+        
+        .reveal{
+            opacity: 0;
+            translate: 0 30px;
+            transition: opacity .7s ease, translate .7s ease,
+                        transform .3s ease, box-shadow .3s ease,
+                        border-color .3s ease, background .3s ease;
+        }
+        .reveal.show{ opacity: 1; translate: 0 0; }
+
+        @media (prefers-reduced-motion: reduce){
+            html{ scroll-behavior: auto; }
+            .reveal{ transition: none; opacity: 1; translate: 0 0; }
+            .profile-frame{ animation: none; }
+        }
+
+        @media (max-width: 800px){
+            nav{ flex-direction: column; height: auto; padding: 12px 0; gap: 8px; }
+            nav ul{ flex-wrap: wrap; }
+            nav ul li{ margin: 0 10px; }
+            .firstSection{ flex-direction: column; height: auto; min-height: 0; margin: 40px 0; }
+            .leftSection, .rightSection{ width: 90%; margin: 0 auto; }
+            .leftSection{ font-size: 2rem; margin: 20px auto; }
+            .leftSection .btn{ margin-top: 10px; font-size: 16px; }
+            .rightSection{ margin-top: 30px; }
+            .profile-frame{ width: min(260px, 70vw); }
+            main hr{ margin: 30px 20px; }
+            .about-content{ grid-template-columns: 1fr; }
+            .footer{ grid-template-columns: 1fr; gap: 28px; padding: 36px 0 24px; }
+            .footer-bottom{ flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="left">Rishabh Kashyap</div>
+            <div class="right">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="firstSection" id="home">
+            <div class="leftSection">
+                Hi, My name is
+                <span class="purple name">Rishabh Kashyap</span>
+                <div>and I am a passionate</div>
+                <span id="element"></span>
+                <div class="buttons">
+                    <a href="images/Rishabh_Kashyap_Resume.pdf" target="_blank" rel="noopener noreferrer"><button class="btn">View Resume</button></a>
+                    <a href="https://github.com/rishabhh01-coder" target="_blank" rel="noopener noreferrer"><button class="btn">Visit Github</button></a>
+                </div>
+            </div>
+            <div class="rightSection">
+                <div class="profile-frame">
+                    <img src="images/Professional_profile_photo.jpeg" alt="Rishabh Kashyap">
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        <section class="section" id="about">
+            <span class="text-gray">A little about me</span>
+            <h1>About Me</h1>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm a <span class="purple">2nd year B.Tech CSE (AI &amp; ML)</span> student at
+                        <span class="purple">COER University, Roorkee</span>. I enjoy building web projects and
+                        exploring how machine learning can solve real-world problems.
+                    </p>
+                    <p>
+                        So far I've built an attendance tracking system and a face-recognition based
+                        attendance system. I'm always learning new tools and looking for opportunities
+                        to grow as a developer.
+                    </p>
+                </div>
+                <div class="about-cards">
+                    <div class="about-card">
+                        <h4>Education</h4>
+                        <p>B.Tech in CSE (AI &amp; ML)</p>
+                        <p class="text-gray">COER University, Roorkee, 2025 - 2029</p>
+                    </div>
+                    <div class="about-card">
+                        <h4>Interests</h4>
+                        <p>Web Development, Data Science</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        <section class="section" id="education">
+            <span class="text-gray">My academic journey</span>
+            <h1>Education</h1>
+            <div class="timeline">
+                <div class="edu-item">
+                    <div class="edu-head">
+                        <h3>B.Tech in CSE (AI &amp; ML)</h3>
+                        <span class="edu-year">2025 - 2029</span>
+                    </div>
+                    <div class="edu-school">COER University, Roorkee</div>
+                    <div class="edu-meta">Currently in 2nd year </div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-head">
+                        <h3>Class XII (Intermediate)</h3>
+                        <span class="edu-year">2024 - 2025</span>
+                    </div>
+                    <div class="edu-school">MAA SARASWATI PUBLIC SENIOR SECONDARY SCHOOL, Bahadrabad</div>
+                    <div class="edu-meta">Board: CBSE &middot; Stream: PCM</div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-head">
+                        <h3>Class X (High School)</h3>
+                        <span class="edu-year">2022 - 2023</span>
+                    </div>
+                    <div class="edu-school">MAA SARASWATI PUBLIC SENIOR SECONDARY SCHOOL, Bahadrabad</div>
+                    <div class="edu-meta">Board: CBSE</div>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        <section class="section" id="projects">
+            <span class="text-gray">What I have built so far</span>
+            <h1>Projects</h1>
+            <div class="projects">
+                <div class="project">
+                    <h3>Student Attendance Tracking System</h3>
+                    <p>Developed attendance tracker that calculates the classes a student needs to attend to reach 75% attendance. Also shows how many classes a student can miss while maintaining 75% or above attendance</p>
+                    <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+                </div>
+                <div class="project">
+                    <h3>Smart Face Attendance System</h3>
+                    <p>A Smart Face Attendance System uses a camera to identify students through facial recognition. It automatically marks their attendance with the date and time in an Excel file, reducing manual work and errors.</p>
+                    <div class="tags"><span>Python</span><span>Pandas</span><span>OpenCV</span><span>NumPy</span></div>
+                </div>
+                <div class="project">
+                    <h3>Movie Recommendation System</h3>
+                    <p>A web application that recommends movies based on user preferences and viewing history.</p>
+                    <div class="tags"><span>Python</span><span>Pandas</span><span>Scikit-learn</span></div>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        <section class="section" id="skills">
+            <span class="text-gray">What I work with</span>
+            <h1>Skills</h1>
+            <div class="skills">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+                <span>React</span>
+                <span>Python</span>
+                <span>NumPy</span>
+                <span>Pandas</span>
+                <span>C++</span>
+                <span>VS Code</span>
+                <span>Git &amp; GitHub</span>
+            </div>
+        </section>
+
+        <hr>
+        <section class="section" id="contact">
+            <span class="text-gray">Let's connect</span>
+            <h1>Contact</h1>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/rishabh-kashyap-a714b7377/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/rishabhh01-coder" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer">
+            <div class="footer-first">
+                <h3>Rishabh's <span class="purple">Portfolio</span></h3>
+                <p>2nd year B.Tech CSE (AI &amp; ML) student building web projects and exploring machine learning.</p>
+            </div>
+            <div class="footer-second">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-third">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="https://github.com/rishabhh01-coder" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/rishabh-kashyap-a714b7377/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" >
+            <span>&#169; 2026 Rishabh Kashyap. All rights reserved.</span>
+            
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/typed.js@3.0.0/dist/typed.umd.js"></script>
+    <script>
+        var typed = new Typed('#element', {
+            strings: ['Web Developer', 'Frontend Developer'],
+            typeSpeed: 50,
+        });
+
+       
+        const items = document.querySelectorAll('.section, .project, .skills span, .edu-item, .about-card');
+        items.forEach(el => el.classList.add('reveal'));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const siblings = [...el.parentElement.children];
+                el.style.transitionDelay = (siblings.indexOf(el) * 90) + 'ms';
+                el.classList.add('show');
+                setTimeout(() => el.style.transitionDelay = '0ms', 1200);
+                observer.unobserve(el);
+            });
+        }, { threshold: 0.15 });
+
+        items.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
